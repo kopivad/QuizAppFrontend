@@ -1,0 +1,147 @@
+<div class="container pt-2">
+  <ng-template #content let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="answer-modal">Question №{{quiz.questions[questionIdx-1].id}}</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="page-form">
+        <div [formGroup]="answerForm" class="form-inline">
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="5" class="sr-only">Body</label>
+            <input formControlName="body" type="text" class="form-control" id="5" placeholder="Body">
+          </div>
+          <div class="form-check">
+            <input formControlName="right" type="checkbox" class="form-check-input" id="7">
+            <label class="form-check-label" for="7">Is right?</label>
+          </div>
+          <button (click)="saveAnswer()" class="btn btn-primary mb-2">Add</button>
+        </div>
+      </div>
+      <div class="page-list">
+        <table class="table">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Body</th>
+            <th scope="col">Is right?</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let answer of quiz.questions[questionIdx - 1].answers; let i = index ">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{answer.body}}</td>
+            <td>
+              <div class="custom-control custom-radio">
+                <input type="checkbox" [checked]="answer.right" id="customRadio1" name="customRadio" class="custom-control-input" disabled>
+                <label class="custom-control-label" for="customRadio1"></label>
+              </div>
+            </td>
+            <td><i (click)="removeAnswer(answer.id)" class="fa fa-times action-button" aria-hidden="true"></i></td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+  <div *ngIf="page == 1" class="first-page">
+    <div class="page-header">
+      <h4 class="mt-2 mb-2">Create quiz</h4>
+    </div>
+    <div class="page-body">
+      <div [formGroup]="quizForm" class="page-form">
+        <div class="form-group">
+          <label for="title">Title:</label>
+          <input type="text" placeholder="Title..." class="form-control" id="title" formControlName="title">
+        </div>
+        <div class="form-group">
+          <label for="description">Description:</label>
+          <input type="text" placeholder="Description..." class="form-control" id="description"
+                 formControlName="description">
+        </div>
+        <div class="form-group">
+          <label for="total">Total questions value:</label>
+          <input type="number" placeholder="Total..." class="form-control" id="total" formControlName="total">
+        </div>
+      </div>
+    </div>
+    <div class="page-footer">
+      <button (click)="nextStep()" type="button" class="btn btn-primary">Next</button>
+    </div>
+  </div>
+
+
+  <div *ngIf="page == 2" class="second-page">
+    <div class="page-header">
+      <h4 class="mt-2 mb-2">Add questions..</h4>
+    </div>
+    <div class="page-body">
+      <div class="page-form">
+        <div [formGroup]="questionForm" class="form-inline">
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="1" class="sr-only">Title</label>
+            <input formControlName="title" type="text" class="form-control" id="1" placeholder="Title">
+          </div>
+          <div class="form-group mx-sm-3 mb-2">
+            <label for="2" class="sr-only">Value</label>
+            <input formControlName="value" type="number" class="form-control" id="2" placeholder="Value">
+          </div>
+          <div class="input-group mx-sm-3 mb-2">
+            <div class="input-group-prepend">
+              <label class="input-group-text" for="type-q">Type:</label>
+            </div>
+            <select formControlName="type" class="custom-select" id="type-q">
+              <option *ngFor="let type of types;" [value]="type">{{type}}</option>
+            </select>
+          </div>
+          <button (click)="saveQuestion()" class="btn btn-primary mb-2">Add</button>
+        </div>
+      </div>
+      <div class="page-list">
+        <p *ngIf="!quiz.questions.length"> No questions yet!</p>
+        <table *ngIf="quiz.questions.length" class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Title</th>
+            <th scope="col">Value</th>
+            <th scope="col">Type</th>
+            <th scope="col">Answers</th>
+            <th scope="col">Action</th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr *ngFor="let question of quiz.questions; let i = index" data-toggle="collapse"
+              [attr.data-target]="'#'+ i" class="accordion-toggle">
+            <th scope="row">{{i + 1}}</th>
+            <td>{{question.title}}</td>
+            <td>{{question.value}}</td>
+            <td>{{question.type}}</td>
+            <td>
+              <i (click)="open(content, i + 1)" class="fa fa-plus action-button" aria-hidden="true"></i>
+              <span>{{question.answers.length}}</span>
+            </td>
+            <td>
+              <i (click)="removeQuestion(question.id)" class="fa fa-times action-button" aria-hidden="true"></i>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="page-footer">
+      <button *ngIf="page == 2" (click)="backStep()" type="button" class="btn btn-dark mr-2">Back</button>
+      <button *ngIf="page == 2" (click)="submitForm()" type="button" class="btn btn-success">Save</button>
+    </div>
+  </div>
+</div>
+
+
+
+

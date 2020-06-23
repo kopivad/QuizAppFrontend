@@ -1,0 +1,27 @@
+<div class=" pt-4 container">
+  <h4>All Quizzes <i (click)="refreshTable()" class="fa fa-refresh action-button" aria-hidden="true"></i></h4>
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Title</th>
+      <th scope="col">Description</th>
+      <th scope="col">Total</th>
+      <th scope="col">Active?</th>
+      <th scope="col">Date</th>
+      <th scope="col">Author Id</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let quiz of quizzes; let i = index">
+      <th scope="row">{{i + 1}}</th>
+      <td>{{quiz.title}}</td>
+      <td>{{quiz.description}}</td>
+      <td>{{quiz.total}}</td>
+      <td>{{quiz.active}}</td>
+      <td>{{quiz.creationDate}}</td>
+      <td>{{quiz.authorId}}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
