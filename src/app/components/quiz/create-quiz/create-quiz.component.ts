@@ -11,6 +11,7 @@ import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 })
 export class CreateQuizComponent {
   quizId: number = 1;
+  stepId: number = 1;
   questionId: number = 1;
   questionIdx: number;
   answerId: number = 1;
@@ -29,13 +30,13 @@ export class CreateQuizComponent {
     active: false,
     questions: [],
     title: '',
-    total: 0
+    total: 0,
+    evaluationSteps: []
   };
 
   constructor(
     private quizService: QuizService,
     private modalService: NgbModal
-
   ) {
   }
 
@@ -54,6 +55,11 @@ export class CreateQuizComponent {
     title: new FormControl(''),
     description: new FormControl(''),
     total: new FormControl('')
+  });
+
+  evaluationStepForm = new FormGroup({
+    minTotal: new FormControl(''),
+    rating: new FormControl('')
   });
 
   types = Object.keys(QuestionType);
@@ -129,8 +135,24 @@ export class CreateQuizComponent {
       active: false,
       questions: [],
       title: '',
-      total: 0
+      total: 0,
+      evaluationSteps: []
     };
+  }
+
+  addEvaluationStep() {
+    let step = {
+      id: this.stepId,
+      minTotal: this.evaluationStepForm.get('minTotal').value,
+      rating: this.evaluationStepForm.get('rating').value
+    }
+    this.quiz.evaluationSteps.push(step);
+    this.evaluationStepForm.reset();
+    this.stepId++;
+  }
+
+  removeStep(id) {
+    this.quiz.evaluationSteps = this.quiz.evaluationSteps.filter(q => q.id != id);
   }
 
 }

@@ -1,7 +1,7 @@
 <div class="container pt-2">
   <ng-template #content let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="answer-modal">Question №{{quiz.questions[questionIdx-1].id}}</h4>
+      <h4 class="modal-title" id="answer-modal">Question №{{quiz.questions[questionIdx - 1].id}}</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">&times;</span>
       </button>
@@ -36,7 +36,8 @@
             <td>{{answer.body}}</td>
             <td>
               <div class="custom-control custom-radio">
-                <input type="checkbox" [checked]="answer.isRight" id="customRadio1" name="customRadio" class="custom-control-input" disabled>
+                <input type="checkbox" [checked]="answer.isRight" id="customRadio1" name="customRadio"
+                       class="custom-control-input" disabled>
                 <label class="custom-control-label" for="customRadio1"></label>
               </div>
             </td>
@@ -69,6 +70,39 @@
           <label for="total">Total questions value:</label>
           <input type="number" placeholder="Total..." class="form-control" id="total" formControlName="total">
         </div>
+        <div class="form-group">
+          <label for="total">Evaluation steps:</label>
+          <p *ngIf="!quiz.evaluationSteps?.length">No steps yet!</p>
+          <table *ngIf="quiz.evaluationSteps?.length" class="table table-sm">
+            <thead>
+            <tr>
+              <th scope="col">Min total</th>
+              <th scope="col">Rating</th>
+              <th scope="col"></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let step of quiz.evaluationSteps; let i = index">
+              <td>{{step.minTotal}}</td>
+              <td>{{step.rating}}</td>
+              <td><i (click)="removeStep(i)" class="fa fa-times action-button" aria-hidden="true"></i></td>
+            </tr>
+            </tbody>
+          </table>
+          <div [formGroup]="evaluationStepForm" class="form-inline">
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="minRating" class="sr-only">Min Rating</label>
+              <input formControlName="minTotal" type="number" class="form-control" id="minRating"
+                     placeholder="Min total">
+            </div>
+            <div class="form-group mx-sm-3 mb-2">
+              <label for="2" class="sr-only">Rating</label>
+              <input formControlName="rating" type="text" class="form-control" id="rating" placeholder="Rating">
+            </div>
+            <button (click)="addEvaluationStep()" class="btn btn-primary mb-2">Add</button>
+          </div>
+        </div>
+
       </div>
     </div>
     <div class="page-footer">

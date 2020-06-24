@@ -6,7 +6,15 @@ export interface Quiz {
   total: number;
   creationDate?: Date;
   author?: User;
-  questions?: Question[]
+  questions?: Question[],
+  evaluationSteps: EvaluationStep[]
+}
+
+export interface EvaluationStep {
+  id: number,
+  minTotal: number,
+  rating: string,
+  Quiz?: Quiz
 }
 
 export interface Question {
