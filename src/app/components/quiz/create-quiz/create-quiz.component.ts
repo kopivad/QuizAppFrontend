@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
-import {QuestionType, Quiz} from "../../types";
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {QuizService} from "../../services/quiz.service";
+import {QuestionType, Quiz, Role} from "../../../types";
+import {FormControl, FormGroup} from "@angular/forms";
+import {QuizService} from "../../../services/quiz.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 
 @Component({
@@ -17,7 +17,14 @@ export class CreateQuizComponent {
   page: number = 1;
   quiz: Quiz = {
     id: this.quizId,
-    authorId: 1,
+    author: {
+      id: 1,
+      name: null,
+      email: ' ',
+      password: ' ',
+      role: Role.ADMINISTRATOR,
+      creationDate: null
+    },
     description: '',
     active: false,
     questions: [],
@@ -33,27 +40,23 @@ export class CreateQuizComponent {
   }
 
   answerForm = new FormGroup({
-    body: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    right: new FormControl('', [Validators.required])
+    body: new FormControl(''),
+    right: new FormControl('')
   });
 
   questionForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    value: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    type: new FormControl('', [Validators.required])
+    title: new FormControl(''),
+    value: new FormControl(''),
+    type: new FormControl('')
   });
 
   quizForm = new FormGroup({
-    title: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    description: new FormControl('', [Validators.required, Validators.minLength(3)]),
-    total: new FormControl('', [Validators.required])
+    title: new FormControl(''),
+    description: new FormControl(''),
+    total: new FormControl('')
   });
 
   types = Object.keys(QuestionType);
-
-  log() {
-    console.log(this.quiz);
-  }
 
   saveQuiz() {
     this.quiz.title = this.quizForm.get('title').value;
@@ -83,7 +86,7 @@ export class CreateQuizComponent {
     this.quiz.questions[this.questionIdx - 1].answers.push({
       id: this.answerId,
       body: this.answerForm.get('body').value,
-      right: this.answerForm.get('right').value
+      isRight: this.answerForm.get('right').value
     });
     this.answerId++;
     this.answerForm.reset();
@@ -107,13 +110,21 @@ export class CreateQuizComponent {
   }
 
   submitForm() {
+    this.quizService.addQuiz(this.quiz);
     this.page = 1;
     this.quizForm.reset();
     this.questionForm.reset();
     this.answerForm.reset();
     this.quiz = {
       id: this.quizId,
-      authorId: 1,
+      author: {
+        id: 1,
+        name: null,
+        email: ' ',
+        password: ' ',
+        role: Role.ADMINISTRATOR,
+        creationDate: null
+      },
       description: '',
       active: false,
       questions: [],

@@ -5,7 +5,7 @@ export interface Quiz {
   active: boolean;
   total: number;
   creationDate?: Date;
-  authorId?: number;
+  author?: User;
   questions?: Question[]
 }
 
@@ -14,20 +14,41 @@ export interface Question {
   title: string;
   value: number;
   type: QuestionType;
-  quizId?: number;
+  quiz?: Quiz;
   answers?: Answer[]
 }
 
 export interface Answer {
   id: number;
   body: string;
-  right: boolean;
-  questionId?: number;
+  isRight: boolean;
+  question?: Question;
 }
 
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  password: string;
+  role: Role;
+  creationDate: Date;
+  quizzes?: Quiz[]
+}
+
+export enum Role {
+  USER = 'USER',
+  MODERATOR = 'MODERATOR',
+  ADMINISTRATOR = 'ADMINISTRATOR'
+}
 export enum QuestionType {
   SINGLE = 'SINGLE',
   MULTI = 'MULTI',
   TEXT = 'TEXT',
   NUMBER = 'NUMBER'
+}
+
+export interface Alert {
+  type: string;
+  message: string;
+  disabled: boolean;
 }

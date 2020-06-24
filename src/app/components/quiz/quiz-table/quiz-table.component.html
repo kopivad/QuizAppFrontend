@@ -1,6 +1,7 @@
 <div class=" pt-4 container">
-  <h4>All Quizzes <i (click)="refreshTable()" class="fa fa-refresh action-button" aria-hidden="true"></i></h4>
-  <table class="table table-bordered">
+  <h4>All Quizzes </h4>
+  <p *ngIf="!quizzes?.length">No quizzes yet!</p>
+  <table *ngIf="quizzes?.length" class="table table-bordered">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -20,7 +21,7 @@
       <td>{{quiz.total}}</td>
       <td>{{quiz.active}}</td>
       <td>{{quiz.creationDate}}</td>
-      <td>{{quiz.authorId}}</td>
+      <td>{{quiz.author?.id}}</td>
     </tr>
     </tbody>
   </table>
