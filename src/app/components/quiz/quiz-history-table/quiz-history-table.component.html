@@ -1,0 +1,23 @@
+<table class="table table-bordered">
+  <thead>
+  <tr>
+    <th scope="col">#</th>
+    <th scope="col">User Id</th>
+    <th scope="col">Total</th>
+    <th scope="col">Rating</th>
+    <th scope="col"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr *ngFor="let history of histories; let i = index">
+    <th scope="row">{{i + 1}}</th>
+    <td>{{history.userId}}</td>
+    <td>{{history.total}}</td>
+    <td>{{history.rating}}</td>
+    <td>
+      <i (click)="getPdf(history)" class="fa fa-file-pdf-o" aria-hidden="true"></i>
+      <i (click)="getCsv(history)" class="fa fa-file" aria-hidden="true"></i>
+    </td>
+  </tr>
+  </tbody>
+</table>

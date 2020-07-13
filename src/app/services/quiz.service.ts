@@ -1,32 +1,31 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Quiz} from "../types";
+import {Quiz, QuizDto, User} from "../types";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
+import {environment} from "../../environments/environment";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
   quizzes: Quiz[] = [];
+  quiz: Quiz = null;
+  baseUrl: string = environment.baseUrl;
 
   constructor(private client: HttpClient) {
-    this.getQuizzes().subscribe(data =>
-      data.map(q => {
-        this.quizzes.push(q);
-      }));
+    this.getQuizzes().subscribe(quizzes => this.quizzes = quizzes);
   }
 
-  getQuizzes(): Observable<any> {
-    return this.client.get('http://localhost:9999/api/v1/quiz/all');
+  getQuizzes(): Observable<QuizDto[]> {
+    return this.client.get<QuizDto[]>(`${this.baseUrl}v1/quiz/all`);
   }
 
   addQuiz(quiz: Quiz) {
     return this.client
-      .post<Quiz>("http://localhost:9999/api/v1/quiz/", quiz)
+      .post<Quiz>(`${this.baseUrl}v1/quiz/`, quiz)
       .pipe(catchError(this.handleError))
       .subscribe(data => {
-        console.log(data);
         this.quizzes.push(data);
       });
   }
@@ -42,4 +41,8 @@ export class QuizService {
     return throwError(
       'Something bad happened; please try again later.');
   };
+
+  getById(id: number): Observable<Quiz> {
+    return this.client.get<Quiz>(`${this.baseUrl}v1/quiz/${id}`);
+  }
 }

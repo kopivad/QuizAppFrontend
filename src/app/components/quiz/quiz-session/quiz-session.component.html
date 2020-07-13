@@ -1,0 +1,20 @@
+<div class="card">
+  <div [formGroup]="answerForm" class="card-body">
+    <h5 class="card-title">{{question?.title}}</h5>
+    <h6 class="card-subtitle mb-2 text-muted">{{question?.value}}</h6>
+    <div  class="form-check" *ngFor="let answer of question?.answers; let i = index">
+      <input type="radio" formControlName="id" class="form-check-input" [value]="answer.id" [id]="i">
+      <label class="form-check-label" [for]="i">{{answer.body}}</label>
+    </div>
+    <hr>
+    <button *ngIf="this.blockedIdx.length != this.quiz.questions.length - 1" type="submit" class="btn btn-primary" (click)="answer()" >Answer</button>
+    <button *ngIf="this.blockedIdx.length === this.quiz.questions.length - 1" type="submit" class="btn btn-primary" (click)="endSession()" >Finish</button>
+  </div>
+</div>
+<nav>
+  <ul class="pagination">
+    <li class="page-item" *ngFor="let question of quiz?.questions; let i = index" >
+      <button [disabled]="ifBlocked(question.id)" class="page-link" (click)="changeQuestion(i)" >{{i + 1}}</button>
+    </li>
+  </ul>
+</nav>

@@ -1,7 +1,7 @@
 <div class=" pt-4 container">
   <h4>All Quizzes </h4>
-  <p *ngIf="!quizzes?.length">No quizzes yet!</p>
-  <table *ngIf="quizzes?.length" class="table table-bordered">
+  <p *ngIf="!quizDtos?.length">No quizzes yet!</p>
+  <table *ngIf="quizDtos?.length" class="table table-bordered">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -10,18 +10,20 @@
       <th scope="col">Total</th>
       <th scope="col">Active?</th>
       <th scope="col">Date</th>
-      <th scope="col">Author Id</th>
+      <th scope="col">Author</th>
+      <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let quiz of quizzes; let i = index">
+    <tr *ngFor="let quiz of quizDtos; let i = index">
       <th scope="row">{{i + 1}}</th>
       <td>{{quiz.title}}</td>
       <td>{{quiz.description}}</td>
       <td>{{quiz.total}}</td>
       <td>{{quiz.active}}</td>
       <td>{{quiz.creationDate}}</td>
-      <td>{{quiz.author?.id}}</td>
+      <td>{{quiz.authorId}}</td>
+      <td><button type="button" (click)="start(quiz.id)" class="btn btn-outline-primary btn-sm">Start</button></td>
     </tr>
     </tbody>
   </table>
