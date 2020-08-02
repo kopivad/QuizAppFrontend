@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
-import {QuizHistory, QuizHistoryDto, QuizSession, QuizSessionDto, User} from "../types";
 import {Observable} from "rxjs";
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Router} from "@angular/router";
+import {QuizHistoryDto} from "../types/quiz-history";
 
 @Injectable({
   providedIn: 'root'

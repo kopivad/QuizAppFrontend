@@ -5,6 +5,8 @@ import {QuizTableComponent} from "./components/quiz/quiz-table/quiz-table.compon
 import {QuizSessionComponent} from "./components/quiz/quiz-session/quiz-session.component";
 import {QuizHistoryComponent} from "./components/quiz/quiz-history/quiz-history.component";
 import {QuizHistoryTableComponent} from "./components/quiz/quiz-history-table/quiz-history-table.component";
+import {GroupComponent} from "./components/group/group.component";
+import {GroupPageComponent} from "./components/group/group-page/group-page.component";
 
 
 const routes: Routes = [
@@ -13,7 +15,9 @@ const routes: Routes = [
   {path: 'quiz/all', component: QuizTableComponent},
   {path: 'quiz/history', component: QuizHistoryTableComponent},
   {path: 'session/:sessionId/quiz/:quizId/question/:questionIdx', component: QuizSessionComponent},
-  {path: 'quiz/history/:id', component: QuizHistoryComponent}
+  {path: 'quiz/history/:id', component: QuizHistoryComponent},
+  {path: 'group', component: GroupComponent},
+  {path: 'group/:id', component: GroupPageComponent}
 
 ];
 

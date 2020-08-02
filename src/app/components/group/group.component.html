@@ -1,0 +1,128 @@
+<div class="container">
+
+  <ng-template #addUserContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="add-user-modal">Add users</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="page-form">
+        <form [formGroup]="searchUserForm" class="form-inline my-2 my-lg-0">
+          <input formControlName="email" (change)="searchUser()" class="form-control mr-sm-2" type="search" placeholder="Search by email" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <ul *ngIf="foundUsers?.length" class="list-group">
+          <li *ngFor="let user of foundUsers" class="list-group-item">{{user.email}} <i (click)="addUser(user)" class="fa fa-plus action-button" aria-hidden="true"></i></li>
+        </ul>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Name</th>
+          <th scope="col">Email</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="!group?.users.length">
+          <th colspan="4" scope="row"><h5>No users yet!</h5></th>
+        </tr>
+        <tr *ngFor="let user of group?.users">
+          <th scope="row">{{user.id}}</th>
+          <td>{{user.name}}</td>
+          <td>{{user.email}}</td>
+          <td><i (click)="removeUser(user.id)" class="fa fa-times action-button" aria-hidden="true"></i></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+  <ng-template #addQuizContent let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="add-quiz-modal">Add quizzes</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div class="page-form">
+        <form [formGroup]="searchQuizForm" class="form-inline my-2 my-lg-0">
+          <input formControlName="title" (change)="searchQuiz()" class="form-control mr-sm-2" type="search" placeholder="Search by title" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+        <ul *ngIf="foundQuizzes?.length" class="list-group">
+          <li *ngFor="let quiz of foundQuizzes" class="list-group-item">{{quiz.title}} <i (click)="addQuiz(quiz)" class="fa fa-plus action-button" aria-hidden="true"></i></li>
+        </ul>
+      </div>
+      <table class="table table-bordered">
+        <thead>
+        <tr>
+          <th scope="col">Id</th>
+          <th scope="col">Title</th>
+          <th scope="col">Desc</th>
+          <th scope="col">Total</th>
+          <th scope="col">Action</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngIf="!group?.quizzes.length">
+          <th colspan="5" scope="row"><h5>No quizzes yet!</h5></th>
+        </tr>
+        <tr *ngFor="let quiz of group?.quizzes">
+          <th scope="row">{{quiz.id}}</th>
+          <td>{{quiz.title}}</td>
+          <td>{{quiz.description}}</td>
+          <td>{{quiz.total}}</td>
+          <td><i (click)="removeQuiz(quiz.id)" class="fa fa-times action-button" aria-hidden="true"></i></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    </div>
+  </ng-template>
+
+  <nav class="d-flex justify-content-between navbar navbar-light bg-light">
+    <h5>All groups</h5>
+    <form [formGroup]="groupForm" class="form-inline my-2 my-lg-0">
+      <input formControlName="name" class="form-control mr-sm-2" type="text" placeholder="Group name" aria-label="Create group">
+      <button (click)="addUserModal(addUserContent)" type="button" class="btn btn-primary mr-2"><i class="fa fa-plus" aria-hidden="true"></i>Add users <span class="badge badge-light">{{group?.users.length ? group.users.length : 0}}</span></button>
+      <button (click)="addQuizModal(addQuizContent)" type="button" class="btn btn-primary mr-2"><i class="fa fa-plus" aria-hidden="true"></i>Add quizzes <span class="badge badge-light">{{group?.quizzes.length ? group.quizzes.length : 0}}</span></button>
+      <button (click)="createGroup()" class="btn btn-success" type="submit">Create</button>
+    </form>
+  </nav>
+
+  <table class="table table-bordered">
+    <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Users</th>
+      <th scope="col">Quizzes</th>
+      <th scope="col"></th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngIf="!groups?.length">
+      <td colspan="5"><h5>No groups yet!</h5></td>
+    </tr>
+    <tr *ngFor="let group of groups">
+      <th scope="row">{{group.id}}</th>
+      <td>{{group.name}}</td>
+      <td>{{group.users.length}}</td>
+      <td>{{group.quizzes.length}}</td>
+      <td><button (click)="goTo(group.id)" class="btn btn-primary btn-sm">Go to&nbsp;<i class="fa fa-arrow-right" aria-hidden="true"></i></button></td>
+    </tr>
+    </tbody>
+  </table>
+
+
+</div>

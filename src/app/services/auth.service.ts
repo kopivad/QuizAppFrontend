@@ -1,12 +1,13 @@
 import {Injectable} from '@angular/core';
-import {Role, User} from "../types";
+import {UserDto} from "../types/user";
+import {Role} from "../types/roles";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
 
-  currentUser: User = {
+  currentUser: UserDto = {
     creationDate: new Date(),
     email: 'kopivad@gmail.com',
     id: 1,

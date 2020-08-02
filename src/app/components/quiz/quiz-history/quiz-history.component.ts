@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
-import {QuizHistoryDto} from "../../../types";
 import {QuizHistoryService} from "../../../services/quiz-history.service";
+import {QuizHistoryDto} from "../../../types/quiz-history";
 
 @Component({
   selector: 'app-quiz-history',

@@ -1,9 +1,10 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, Router} from "@angular/router";
 import {QuizService} from "../../../services/quiz.service";
-import {Question, Quiz, QuizAnswerDto} from "../../../types";
 import {QuizSessionService} from "../../../services/quiz-session.service";
 import {FormControl, FormGroup} from "@angular/forms";
+import {Quiz} from "../../../types/quiz";
+import {Question} from "../../../types/question";
 
 @Component({
   selector: 'app-quiz-session',

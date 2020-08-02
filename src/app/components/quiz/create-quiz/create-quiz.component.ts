@@ -1,9 +1,10 @@
 import {Component} from '@angular/core';
-import {QuestionType, Quiz, QuizDto, Role} from "../../../types";
 import {FormControl, FormGroup} from "@angular/forms";
 import {QuizService} from "../../../services/quiz.service";
 import {NgbModal} from "@ng-bootstrap/ng-bootstrap";
 import {AuthService} from "../../../services/auth.service";
+import {QuizDto} from "../../../types/quiz";
+import {QuestionType} from "../../../types/question-type";
 
 @Component({
   selector: 'app-create-quiz',
@@ -74,7 +75,8 @@ export class CreateQuizComponent {
       title: this.questionForm.get('title').value,
       value: this.questionForm.get('value').value,
       type: this.questionForm.get('type').value,
-      answers: []
+      answers: [],
+      quizId: 1
     });
     this.questionForm.reset();
     this.questionId++;
@@ -89,7 +91,8 @@ export class CreateQuizComponent {
     this.quiz.questions[this.questionIdx - 1].answers.push({
       id: this.answerId,
       body: this.answerForm.get('body').value,
-      isRight: this.answerForm.get('right').value
+      isRight: this.answerForm.get('right').value,
+      questionId: 1
     });
     this.answerId++;
     this.answerForm.reset();
@@ -136,7 +139,8 @@ export class CreateQuizComponent {
       id: this.stepId,
       minTotal: this.evaluationStepForm.get('minTotal').value,
       maxTotal: this.evaluationStepForm.get('maxTotal').value,
-      rating: this.evaluationStepForm.get('rating').value
+      rating: this.evaluationStepForm.get('rating').value,
+      quizId: 1
     }
     this.quiz.evaluationSteps.push(step);
     this.evaluationStepForm.reset();
@@ -146,155 +150,4 @@ export class CreateQuizComponent {
   removeStep(id) {
     this.quiz.evaluationSteps = this.quiz.evaluationSteps.filter(q => q.id != id);
   }
-
-  initQuiz() {
-    this.quiz = {
-      active: false,
-      authorId: this.authService.currentUser.id,
-      creationDate: new Date(),
-      description: 'Math description',
-      evaluationSteps: [
-        {
-          id: this.stepId,
-          minTotal: 35,
-          maxTotal: 44,
-          rating: 'FX'
-        },
-        {
-          id: this.stepId + 1,
-          minTotal: 45,
-          maxTotal: 60,
-          rating: 'F'
-        },
-        {
-          id: this.stepId + 2,
-          minTotal: 61,
-          maxTotal: 64,
-          rating: 'E'
-        },
-        {
-          id: this.stepId + 3,
-          minTotal: 65,
-          maxTotal: 74,
-          rating: 'D'
-        },
-        {
-          id: this.stepId + 4,
-          minTotal: 75,
-          maxTotal: 80,
-          rating: 'C'
-        },
-        {
-          id: this.stepId + 5,
-          minTotal: 81,
-          maxTotal: 90,
-          rating: 'B'
-        },
-        {
-          id: this.stepId + 6,
-          minTotal: 91,
-          maxTotal: 100,
-          rating: 'A'
-        }
-      ],
-      id: this.quizId,
-      questions: [
-        {
-          id: this.questionId,
-          type: QuestionType.NUMBER,
-          value: 25,
-          title: '2*2',
-          answers: [
-            {
-              id: this.answerId,
-              isRight: true,
-              body: '4',
-            },
-            {
-              id: this.answerId + 1,
-              isRight: false,
-              body: '3',
-            },
-            {
-              id: this.answerId + 2,
-              isRight: false,
-              body: '6',
-            }
-          ]
-        },
-        {
-          id: this.questionId,
-          type: QuestionType.NUMBER,
-          value: 25,
-          title: '3*3',
-          answers: [
-            {
-              id: this.answerId + 3,
-              isRight: true,
-              body: '9',
-            },
-            {
-              id: this.answerId + 4,
-              isRight: false,
-              body: '8',
-            },
-            {
-              id: this.answerId + 5,
-              isRight: false,
-              body: '10',
-            }
-          ]
-        },
-        {
-          id: this.questionId,
-          type: QuestionType.NUMBER,
-          value: 25,
-          title: '4*4',
-          answers: [
-            {
-              id: this.answerId + 6,
-              isRight: true,
-              body: '16',
-            },
-            {
-              id: this.answerId + 7,
-              isRight: false,
-              body: '17',
-            },
-            {
-              id: this.answerId + 8,
-              isRight: false,
-              body: '15',
-            }
-          ]
-        },
-        {
-          id: this.questionId,
-          type: QuestionType.NUMBER,
-          value: 25,
-          title: '5*5',
-          answers: [
-            {
-              id: this.answerId + 9,
-              isRight: true,
-              body: '25',
-            },
-            {
-              id: this.answerId + 10,
-              isRight: false,
-              body: '24',
-            },
-            {
-              id: this.answerId + 11,
-              isRight: false,
-              body: '23',
-            }
-          ]
-        }
-      ],
-      title: 'Math',
-      total: 100
-    };
-  }
-
 }

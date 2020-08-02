@@ -1,12 +1,13 @@
 import {Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {QuizAnswerDto, QuizSessionDto} from "../types";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
 import {QuizHistoryService} from "./quiz-history.service";
 import {AuthService} from "./auth.service";
 import {Router} from "@angular/router";
 import {QuizAnswerService} from "./quiz-answer.service";
+import {QuizSessionDto} from "../types/quiz-session";
+import {QuizAnswerDto} from "../types/quiz-answer";
 
 @Injectable({
   providedIn: 'root'
@@ -41,7 +42,6 @@ export class QuizSessionService implements OnInit {
   endSession() {
     this.quizHistoryService.createHistory(this.session.id);
     this.session = null;
-
   }
 
   private saveSession(quizSessionDto: QuizSessionDto): Observable<number> {

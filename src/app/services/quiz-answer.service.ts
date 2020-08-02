@@ -1,8 +1,8 @@
-import { Injectable } from '@angular/core';
-import {QuizAnswerDto} from "../types";
+import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {environment} from "../../environments/environment";
 import {Observable} from "rxjs";
+import {QuizAnswerDto} from "../types/quiz-answer";
 
 @Injectable({
   providedIn: 'root'

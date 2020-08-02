@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {QuizService} from "../../../services/quiz.service";
-import {Quiz, QuizDto, QuizAnswer, QuizSession, Role, User} from "../../../types";
 import {QuizSessionService} from "../../../services/quiz-session.service";
-import {AuthService} from "../../../services/auth.service";
+import {QuizDto} from "../../../types/quiz";
 
 @Component({
   selector: 'app-quiz-table',
@@ -10,7 +9,7 @@ import {AuthService} from "../../../services/auth.service";
   styleUrls: ['./quiz-table.component.scss']
 })
 export class QuizTableComponent implements OnInit {
-  quizDtos: QuizDto[] = [];
+  quiz: QuizDto[] = [];
 
   constructor(
     private quizService: QuizService,
@@ -24,6 +23,6 @@ export class QuizTableComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.quizService.getQuizzes().subscribe(dtos => this.quizDtos = dtos);
+    this.quizService.getQuizzes().subscribe(data => this.quiz = data);
   }
 }

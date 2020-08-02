@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {QuizHistoryService} from "../../../services/quiz-history.service";
-import {QuizHistoryDto} from "../../../types";
+import {QuizHistoryDto} from "../../../types/quiz-history";
 
 @Component({
   selector: 'app-quiz-history-table',

@@ -1,16 +1,16 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpErrorResponse} from "@angular/common/http";
-import {Quiz, QuizDto, User} from "../types";
 import {Observable, throwError} from "rxjs";
 import {catchError} from "rxjs/operators";
 import {environment} from "../../environments/environment";
+import {Quiz, QuizDto} from "../types/quiz";
 
 @Injectable({
   providedIn: 'root'
 })
 export class QuizService {
-  quizzes: Quiz[] = [];
-  quiz: Quiz = null;
+  quizzes: QuizDto[] = [];
+  quiz: QuizDto;
   baseUrl: string = environment.baseUrl;
 
   constructor(private client: HttpClient) {
@@ -21,9 +21,9 @@ export class QuizService {
     return this.client.get<QuizDto[]>(`${this.baseUrl}v1/quiz/all`);
   }
 
-  addQuiz(quiz: Quiz) {
+  addQuiz(quiz: QuizDto) {
     return this.client
-      .post<Quiz>(`${this.baseUrl}v1/quiz/`, quiz)
+      .post<QuizDto>(`${this.baseUrl}v1/quiz/`, quiz)
       .pipe(catchError(this.handleError))
       .subscribe(data => {
         this.quizzes.push(data);
@@ -44,5 +44,9 @@ export class QuizService {
 
   getById(id: number): Observable<Quiz> {
     return this.client.get<Quiz>(`${this.baseUrl}v1/quiz/${id}`);
+  }
+
+  getByName(title: string) : Observable<QuizDto[]> {
+    return this.client.get<QuizDto[]>(`${environment.baseUrl}v1/quiz?title=${title}`);
   }
 }

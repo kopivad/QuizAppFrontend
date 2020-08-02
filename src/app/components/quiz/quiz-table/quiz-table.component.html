@@ -1,7 +1,7 @@
 <div class=" pt-4 container">
   <h4>All Quizzes </h4>
-  <p *ngIf="!quizDtos?.length">No quizzes yet!</p>
-  <table *ngIf="quizDtos?.length" class="table table-bordered">
+  <p *ngIf="!quiz?.length">No quizzes yet!</p>
+  <table *ngIf="quiz?.length" class="table table-bordered">
     <thead>
     <tr>
       <th scope="col">#</th>
@@ -15,7 +15,7 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let quiz of quizDtos; let i = index">
+    <tr *ngFor="let quiz of quiz; let i = index">
       <th scope="row">{{i + 1}}</th>
       <td>{{quiz.title}}</td>
       <td>{{quiz.description}}</td>
